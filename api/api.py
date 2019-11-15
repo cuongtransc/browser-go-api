@@ -13,6 +13,7 @@ def register_api_endpoints(app):
     app.register_blueprint(api_games)
     app.register_blueprint(api)
     app.register_blueprint(auth)
+
     return app
 
 @api.route('/home', methods=['GET'])

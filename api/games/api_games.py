@@ -16,11 +16,14 @@ api_games = Blueprint('api_games', __name__, url_prefix='/api/games')
 @api_games.route('/<game_id>', methods=['GET'])
 def get_room(game_id):
     print(game_id)
+
     game = Game.query.filter_by(id=game_id).first()
+
     # TODO create decorator that returns user from header
     auth_header = request.headers.get('Authorization')
     user = jwt.decode(auth_header.split(" ")[1], os.environ.get('SECRET_KEY'))['user']
     user = json.loads(user)
+
     # add user to game if open position available
     if user and not game.player_black and game.player_white != user['id']:
         game.player_black = user['id']
